@@ -128,3 +128,4 @@ C:\Users\gabri\OneDrive\Documentos\Projetos Claude Code\Sistema Clinica\obj\Debu
 C:\Users\gabri\OneDrive\Documentos\Projetos Claude Code\Sistema Clinica\obj\Debug\net8.0\SistemaClinica.pdb
 C:\Users\gabri\OneDrive\Documentos\Projetos Claude Code\Sistema Clinica\obj\Debug\net8.0\SistemaClinica.genruntimeconfig.cache
 C:\Users\gabri\OneDrive\Documentos\Projetos Claude Code\Sistema Clinica\obj\Debug\net8.0\ref\SistemaClinica.dll
+C:\Users\gabri\OneDrive\Documentos\Projetos Claude Code\Sistema Clinica\obj\Debug\net8.0\SistemaClinica.sourcelink.json

@@ -3,72 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Clínica</title>
+    <title>ClinicCare - Sistema de Clínica</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📋 Sistema Clínica</h1>
-            <p>Gerenciamento de Pacientes e Consultas</p>
-        </header>
-
-        <div class="sections">
-            <!-- PACIENTES -->
-            <div class="section">
-                <h2>Pacientes</h2>
-
-                <div id="patientMessage" class="message"></div>
-
-                <div class="form-group">
-                    <label for="patientName">Nome</label>
-                    <input type="text" id="patientName" placeholder="Nome completo">
-                </div>
-
-                <div class="form-group">
-                    <label for="patientBirthdate">Data de Nascimento</label>
-                    <input type="date" id="patientBirthdate">
-                </div>
-
-                <div class="button-group">
-                    <button class="btn-primary" onclick="savePatient()">Cadastrar</button>
-                    <button class="btn-secondary" onclick="cancelPatientEdit()">Cancelar</button>
-                </div>
-
-                <div class="list-container">
-                    <div id="patientsList"></div>
+    <div class="app-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <span class="logo-icon">🏥</span>
+                    <span class="logo-text">ClinicCare</span>
                 </div>
             </div>
+            <nav class="sidebar-nav">
+                <button class="nav-item active" onclick="switchScreen('patients')">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Pacientes</span>
+                </button>
+                <button class="nav-item" onclick="switchScreen('appointments')">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-text">Consultas</span>
+                </button>
+            </nav>
+        </aside>
 
-            <!-- CONSULTAS -->
-            <div class="section">
-                <h2>Consultas</h2>
-
-                <div id="appointmentMessage" class="message"></div>
-
-                <div class="form-group">
-                    <label for="appointmentPatient">Paciente</label>
-                    <select id="appointmentPatient">
-                        <option value="">Selecione um paciente</option>
-                    </select>
+        <!-- MAIN CONTENT -->
+        <div class="main-wrapper">
+            <!-- HEADER -->
+            <header class="top-header">
+                <div class="header-content">
+                    <div>
+                        <h1>Sistema de Gerenciamento Clínico</h1>
+                        <p>Gerencie pacientes e consultas de forma eficiente</p>
+                    </div>
                 </div>
+            </header>
 
-                <div class="form-group">
-                    <label for="appointmentDateTime">Data e Hora</label>
-                    <input type="datetime-local" id="appointmentDateTime">
-                </div>
+            <!-- CONTENT AREA -->
+            <main class="content-area">
+                <!-- PACIENTES SCREEN -->
+                <section id="patientsScreen" class="screen active">
+                    <div class="screen-container">
+                        <div class="section-header">
+                            <h2>Gerenciar Pacientes</h2>
+                            <p>Adicione, edite ou remova pacientes do sistema</p>
+                        </div>
 
-                <div class="button-group">
-                    <button class="btn-primary" onclick="saveAppointment()">Agendar</button>
-                    <button class="btn-secondary" onclick="cancelAppointmentEdit()">Cancelar</button>
-                </div>
+                        <!-- FORM -->
+                        <div class="form-card">
+                            <h3>Cadastro de Paciente</h3>
 
-                <div class="list-container">
-                    <div id="appointmentsList"></div>
-                </div>
-            </div>
+                            <form onsubmit="event.preventDefault(); savePatient();">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="patientName">Nome Completo</label>
+                                        <input type="text" id="patientName" placeholder="Digite o nome completo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="patientBirthdate">Data de Nascimento</label>
+                                        <input type="date" id="patientBirthdate">
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="btn-icon">➕</span> Cadastrar Paciente
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="cancelPatientEdit()">
+                                        <span class="btn-icon">✕</span> Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- PATIENTS LIST -->
+                        <div class="list-card">
+                            <h3>Lista de Pacientes</h3>
+                            <div class="table-wrapper">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nome</th>
+                                            <th>Data de Nascimento</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="patientsList">
+                                        <tr class="empty-state">
+                                            <td colspan="4">Nenhum paciente cadastrado</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- APPOINTMENTS SCREEN -->
+                <section id="appointmentsScreen" class="screen">
+                    <div class="screen-container">
+                        <div class="section-header">
+                            <h2>Gerenciar Consultas</h2>
+                            <p>Agende, edite ou cancele consultas</p>
+                        </div>
+
+                        <!-- FORM -->
+                        <div class="form-card">
+                            <h3>Agendar Consulta</h3>
+
+                            <form onsubmit="event.preventDefault(); saveAppointment();">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="appointmentPatientSearch">Paciente</label>
+                                        <div class="autocomplete-container">
+                                            <input type="text" id="appointmentPatientSearch" placeholder="Digite o nome do paciente" autocomplete="off">
+                                            <input type="hidden" id="appointmentPatient">
+                                            <div id="appointmentPatientList" class="autocomplete-list"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="appointmentDateTime">Data e Hora</label>
+                                        <input type="datetime-local" id="appointmentDateTime">
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="btn-icon">📅</span> Agendar Consulta
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="cancelAppointmentEdit()">
+                                        <span class="btn-icon">✕</span> Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- APPOINTMENTS LIST -->
+                        <div class="list-card">
+                            <h3>Próximas Consultas</h3>
+                            <div class="table-wrapper">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Paciente</th>
+                                            <th>Data e Hora</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="appointmentsList">
+                                        <tr class="empty-state">
+                                            <td colspan="4">Nenhuma consulta agendada</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
         </div>
     </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <script src="script.js"></script>
 </body>

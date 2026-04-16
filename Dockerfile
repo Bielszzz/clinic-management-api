@@ -7,7 +7,7 @@ RUN dotnet restore
 
 # copia o resto do código
 COPY . ./
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish SistemaClinica.csproj -c Release -o /app/publish
 
 # imagem final
 FROM mcr.microsoft.com/dotnet/aspnet:8.0

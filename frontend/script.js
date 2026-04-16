@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://clinic-api-20p7.onrender.com/api';
 let editingPatientId = null;
 let editingAppointmentId = null;
 let allPatients = [];
